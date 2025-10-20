@@ -1,3 +1,40 @@
+/* ================== Global Styles ================== */
+html {
+    font-size: 62.5%; /* 10px */
+}
 body {
-    background-color: brown;
+    font-size: 1.5rem;
+    background-color: #DF1F2D;
+}
+
+/* ================== Element Styles ================== */
+nav {
+    display: flex;
+    justify-content: space-around;
+    flex: 1;
+    flex-wrap: wrap;
+
+    margin: 2rem 0;
+}
+
+/* ================== Typography ================== */
+h1 {
+    font-size: 3.5rem;
+    padding: 1rem;
+    border-radius: 1.5rem;
+    text-align: center;
+
+    background-color: #447BBE;
+}
+
+h2 {
+    font-size: 2rem;
+    text-align: left;
+}
+
+/* ================== Class Styles ================== */
+.bg-flex {
+    padding: 0.5rem 1rem;
+    border-radius: 0.8rem;
+    background-color: #447BBE;
 }
