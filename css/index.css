@@ -1,10 +1,26 @@
 /* ================== Global Styles ================== */
 html {
     font-size: 62.5%; /* 10px */
+    --background-color: #33ff00;
+    --text-bg-color: #28ca00;
 }
+
+/* background, accent, font changes according to class*/
+html.spider-man {
+    --background-color: #DF1F2D;
+    --text-bg-color: #447BBE; 
+}
+
+html.black-panther {
+    --background-color: #000000;
+    --text-bg-color: #ffdc16; 
+}
+
+/* #664EAE - Black Panther's purple, in case I want to integrate that into the site */
+
 body {
     font-size: 1.5rem;
-    background-color: #DF1F2D;
+    background-color: var(--background-color);
 }
 
 /* ================== Element Styles ================== */
@@ -17,14 +33,13 @@ nav {
     margin: 2rem 0;
 }
 
+
 /* ================== Typography ================== */
 h1 {
     font-size: 3.5rem;
     padding: 1rem;
     border-radius: 1.5rem;
     text-align: center;
-
-    background-color: #447BBE;
 }
 
 h2 {
@@ -32,9 +47,82 @@ h2 {
     text-align: left;
 }
 
+p {
+    font-size: 1.6rem;
+    padding: 1rem;
+    border-radius: 2rem;
+}
+
 /* ================== Class Styles ================== */
-.bg-flex {
+.accent {
+    display: inline-block;
+    background-color: var(--text-bg-color); /* Changes accent color based on currently selected superhero */ 
+}
+
+.comic-img {
+    display: block; 
+    margin: auto;
+    max-width: 70dvw;
+}
+
+/* ================== ID Styles ================== */
+#comic-title {
     padding: 0.5rem 1rem;
     border-radius: 0.8rem;
-    background-color: #447BBE;
+}
+
+#usm-click {
+    color: #ffffff;
+    text-decoration: none; /* Removes underline from links for "Spider-Man" and "Black Panther" */
+    background-color: #DF1F2D;
+    padding: 1rem;
+    border-radius: 2rem;
+}
+#ubp-click {
+    color: #ffdc16;
+    text-decoration: none;
+    background-color: #000000;
+    padding: 1rem;
+    border-radius: 2rem;
+}
+
+/* Device Compatibility */
+/* Phone Display */
+@media (max-width: 500px) {
+    /* ======= Typography ======= */
+    p {
+        text-align: center;
+        font-size: 2.5rem;
+    }
+    h2 {
+        text-align: center;
+        font-size: 3rem;
+    }
+    nav {
+        font-size: 2rem;
+        text-align: center;
+        flex-direction: column;
+        margin: 1rem 0;
+    }
+
+    /* ======= CLass Styles ======= */
+    .comic-img {
+        max-width: 90dvw;
+    }
+    /* ======= ID Styles ======= */
+    #usm-click {
+        margin-bottom: 1rem;
+    }
+}
+/* Tablet Display */
+@media (min-width: 500px) and (max-width: 1000px) {
+    p {
+        font-size: 1.9rem;
+    }
+    h2 {
+        font-size: 2.2rem;
+    }
+    .comic-img {
+        max-width: 70dvw;
+    }
 }
