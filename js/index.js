@@ -1,3 +1,13 @@
+// // ---------------------------------- Definitions ---------------------------------- // //
+// ------------------- Global Variables ------------------- //
+const THEME_CLASS_NAME_BY_CHARACTER_ID = {
+    38809: 'spider-man',
+    38806: 'black-panther'
+}
+const HTML_ELEMENT = document.documentElement;
+
+const comicTitle = document.querySelector('#comic-title');
+const comicDesc = document.querySelector('.comic-desc');
 // ----------------- Keys and Hashes ----------------- //
 // Retrieve the keys + create the hashes to retrieve information from the Marvel API
 // NOTE : publicKey and privateKey defined in keys.js, and MD5 is pulled from the CryptoJS cdnjs script.
@@ -15,41 +25,63 @@ searchParams.append("apikey", publicKey);
 searchParams.append("ts", ts);
 searchParams.append("hash", MD5Hash);
 
+// Defining a fetching function
+function marvelComicFetch(comicID) {
+    
+    // Fetch data and populate page
+    fetch(`https://gateway.marvel.com/v1/public/series/${comicID}?${searchParams}`)
+        .then(response => response.json())
+        .then(response => {
+            const comic = response.data.results[0];
+            console.log(comic);
+
+            // Set image after nav bar to preview image of comic //
+            // Find image element
+            const previewIMG = document.querySelector('.comic-img');
+
+            // Set src attribute to appropriate url
+            const imgURL = `${comic.thumbnail.path}.${comic.thumbnail.extension}`;
+            previewIMG.setAttribute('src', imgURL);
+
+            // Set title and paragraph elements to reflect selected comic attributes //
+            // Set attributes of comic title and comic description
+            comicTitle.style.display = '';
+            comicDesc.style.display = '';
+
+            comicTitle.innerText = comic.title
+            comicDesc.innerText = comic.description;
+
+            // Change colors on page //
+            // Set the class of the html element to the character specified by the passed in comic ID
+            const charName = THEME_CLASS_NAME_BY_CHARACTER_ID[comicID];
+
+            // Remove all classes on the html element, followed by adding the class name of the current comic
+            HTML_ELEMENT.className = '';
+            HTML_ELEMENT.setAttribute('class', charName);
+        });
+}
+
+// // ---------------------------------- Relevant Runtime ---------------------------------- // //
+
+// Hide all text elements that are not in use
+comicTitle.style.display = 'None';
+comicDesc.style.display = 'None';
+
 // ----------------- Ultimate Spider-Man ----------------- //
-fetch(`https://gateway.marvel.com/v1/public/series/38809?${searchParams}`)
-    .then(response => response.json())
-    .then(response => {
-        const comicUSM = response.data.results[0];
+// Locate link for Spider-Man
+const usmShow = document.querySelector('#usm-click');
 
-        console.log(comicUSM);
+// When clicked, fetch Spider-Man data from the endpoint
+usmShow.addEventListener('click', () => marvelComicFetch(38809));
 
-        // Set the page's title to what is shown in this query //
-        const pageTitle = document.querySelector('h1');
-        pageTitle.innerText = comicUSM.title
+// ----------------- Ultimate Black Panther ----------------- //
+// Locate link for Black Panther
+const ubpShow = document.querySelector('#ubp-click');
 
-        // Add the image from the API fetch right after the nav bar //
-        const previewIMG = document.createElement('img');
+// When clicked, fetch Black Panther data from the endpoint 
+ubpShow.addEventListener('click', () => marvelComicFetch(38806));
 
-        // Give it the link specified by the thumbnail attribute in the response
-        const imgURL = `${comicUSM.thumbnail.path}.${comicUSM.thumbnail.extension}`;
-
-        // Add image element to HTML document
-        const header = document.querySelector('header');
-        
-        previewIMG.setAttribute('src', imgURL);
-        previewIMG.setAttribute('class', 'usm-img');
-
-        previewIMG.style.display = 'block';
-        previewIMG.style.margin = 'auto';
-
-        header.append(previewIMG);
-
-        // Add paragraph detailing the description of the comics as given by the Marvel API
-        const marvelDesc = document.createElement('p');
-        marvelDesc.setAttribute('class', 'marvelDesc');
-        marvelDesc.innerText = comicUSM.description;
-
-        // Add to the HTML tree after first paragraph
-        const introFirstParagraph = document.querySelector('.intro-start-line');
-        introFirstParagraph.after(marvelDesc);
-    });
+// Series IDs for the three Ultimate comic series I was looking into
+// 38806 ubp
+// 44292 ueg
+// 42303 uw
