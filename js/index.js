@@ -58,7 +58,8 @@ function marvelComicFetch(comicID) {
             // Remove all classes on the html element, followed by adding the class name of the current comic
             HTML_ELEMENT.className = '';
             HTML_ELEMENT.setAttribute('class', charName);
-        });
+        })
+        .catch(error => console.log('The fetch was unsuccessful! Probably because the API sucks and the server is down.'));;
 }
 
 // // ---------------------------------- Relevant Runtime ---------------------------------- // //
